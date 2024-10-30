@@ -43,7 +43,7 @@ To run dockerized configuration, run:
 ```
 To run Cypress tests inside container, run:
 ```shell
-  docker container -exec -ti e2e bash
+  docker container exec -ti e2e bash
 ```
 and then inside container
 ```shell
