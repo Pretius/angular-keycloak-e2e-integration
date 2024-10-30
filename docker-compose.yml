@@ -1,0 +1,61 @@
+services:
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:25.0.5
+    command: [ "start-dev", "--import-realm" ]
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - angular-keycloak-e2e-integration
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:13.4
+    ports:
+      - "5432:5432"
+    networks:
+      - angular-keycloak-e2e-integration
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "4200:4200"
+    depends_on:
+      - keycloak
+    networks:
+      - angular-keycloak-e2e-integration
+
+  e2e:
+    container_name: e2e
+    build:
+      dockerfile: Dockerfile.e2e
+      context: .
+    tty: true
+    depends_on:
+      - app
+    network_mode: 'host'
+    volumes:
+      - ./e2e/:/opt/app/e2e
+      - /opt/app/e2e/node_modules
+
+
+networks:
+  angular-keycloak-e2e-integration:

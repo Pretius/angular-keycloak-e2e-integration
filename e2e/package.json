@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "cy:cleanUpJunitTests": "rm -rf cypress/reports || true",
+    "cy:combineJunitTests": "jrm cypress/reports/junit/test-result-combined.xml \"cypress/reports/junit/*.xml\"",
+    "cy:preRun": "npm run cy:cleanUpJunitTests",
+    "cy:run": "cypress run",
+    "cy:runLocal": "cypress run --config-file cypress.config.local.js",
+    "cy:postRun": "npm run cy:combineJunitTests"
+  },
+  "devDependencies": {
+    "cypress": "^12.17.4",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-if": "^1.10.4",
+    "cypress-mochawesome-reporter": "^3.5.1",
+    "cypress-multi-reporters": "^1.6.3",
+    "junit-report-merger": "^6.0.2",
+    "mocha-junit-reporter": "^2.2.0",
+    "playwright-webkit": "^1.32.2"
+  }
+}

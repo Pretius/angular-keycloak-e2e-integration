@@ -1,0 +1,7 @@
+.angular
+.idea
+dist
+node_modules
+keycloak
+Dockerfile.*
+.dockerignore

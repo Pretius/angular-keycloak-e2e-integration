@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <a routerLink="/">
+    <img
+      ngSrc="/assets/images/pretius.svg"
+      alt="Pretius"
+      height="34" width="100"
+    />
+  </a>
+  <div class="nav-links">
+    <a class="link-text" routerLink="">Dashboard</a>
+    <p class="link-text">|</p>
+    <a class="link-text" *ngIf="isLoggedIn" routerLink="protected">Protected</a>
+    <p class="link-text" *ngIf="isLoggedIn">|</p>
+    <a class="link-text" routerLink="unprotected">Unprotected</a>
+    <p class="link-text" *ngIf="isLoggedIn">|</p>
+    <p class="link-text" *ngIf="isLoggedIn" (click)="authenticationService.logout()">Logout</p>
+    <p class="link-text" *ngIf="!isLoggedIn">|</p>
+    <p class="link-text" *ngIf="!isLoggedIn" (click)="authenticationService.redirectToLoginPage()">Login</p>
+  </div>
+</nav>
